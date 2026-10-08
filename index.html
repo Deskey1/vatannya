@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Для Юлі ❤️</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+body {
+    background: #111;
+    color: white;
+}
+
+/* Фонові фотографії */
+
+.photo {
+    position: fixed;
+    inset: 0;
+
+    background-size: cover;
+    background-position: center;
+
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.photo.active {
+    opacity: 1;
+    animation: zoom 12s ease-in-out infinite alternate;
+}
+
+@keyframes zoom {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+
+}
+/* Затемнення */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Центр */
+
+.screen {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    text-align: center;
+}
+
+/* Картка */
+
+.card {
+    width: min(92vw, 560px);
+    padding: 35px 25px;
+
+    border-radius: 28px;
+
+    background: rgba(20, 20, 30, 0.72);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    box-shadow: 0 20px 70px rgba(0,0,0,0.5);
+
+    animation: appear 1s ease;
+}
+
+@keyframes appear {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+h1 {
+    font-size: clamp(28px, 8vw, 50px);
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: clamp(27px, 7vw, 45px);
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: clamp(17px, 4.5vw, 21px);
+    line-height: 1.5;
+}
+
+/* Терези */
+
+.law {
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+/* Кнопки */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin-top: 30px;
+
+    flex-wrap: wrap;
+}
+
+button {
+
+    border: none;
+
+    border-radius: 16px;
+
+    padding: 15px 32px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+button:hover {
+
+    transform: scale(1.06);
+
+}
+
+.yes {
+
+    background: white;
+
+    color: #222;
+
+}
+
+.no {
+
+    background: #ff4d6d;
+
+    color: white;
+
+}
+
+.continue {
+
+    background: white;
+
+    color: #222;
+
+    margin-top: 20px;
+
+}
+
+/* Приховані елементи */
+
+.hidden {
+    display: none;
+}
+
+/* Сердечка */
+
+.heart {
+
+    position: fixed;
+
+    bottom: -30px;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    animation: float 5s linear forwards;
+
+}
+
+@keyframes float {
+
+    0% {
+
+        transform: translateY(0) scale(0.7);
+
+        opacity: 0;
+
+    }
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        transform: translateY(-110vh) scale(1.3);
+
+        opacity: 0;
+
+    }
+
+}
+
+.small {
+
+    opacity: 0.7;
+
+    font-size: 14px;
+
+    margin-top: 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ФОТО -->
+
+<div class="photo active" id="photo1"></div>
+
+<div class="photo" id="photo2"></div>
+
+<div class="photo" id="photo3"></div>
+
+<div class="overlay"></div>
+
+
+<div class="screen">
+
+
+<!-- ПЕРШИЙ ЕКРАН -->
+
+<div class="card" id="question">
+
+    <div class="law">
+        ⚖️
+    </div>
+
+    <h1>
+        Любіма, є одне<br>
+        дуже важливе питання...
+    </h1>
+
+    <p>
+        Сьогодні 8 жовтня?
+    </p>
+
+    <div class="buttons">
+
+        <button
+            class="yes"
+            onclick="yesAnswer()">
+
+            Так ❤️
+
+        </button>
+
+        <button
+            class="no"
+            onclick="noAnswer()">
+
+            Ні
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- БРЕХУХА -->
+
+<div
+    class="card hidden"
+    id="liar">
+
+    <div class="law">
+        🤨
+    </div>
+
+    <h2>
+        БРІХУХА!
+    </h2>
+
+    <p>
+        Не бріши 😏
+    </p>
+
+    <button
+        class="continue"
+        onclick="backToQuestion()">
+
+        Продовжити
+
+    </button>
+
+</div>
+
+
+<!-- ПРИВІТАННЯ -->
+
+<div
+    class="card hidden"
+    id="congrats">
+
+    <div class="law">
+        ⚖️❤️
+    </div>
+
+    <h2>
+        З Днем юриста,<br>
+        Кіцюнькаааааа!
+    </h2>
+
+    <p>
+        Вітаю тебе з твоїм професійним днем! ❤️
+    </p>
+
+    <p>
+        Бажаю тобі успіхів,Бажаю тобі всього найкращого,
+         щоб ніхто не тріпав нерви і ти всіх мігала  🥰
+    </p>
+
+    <p>
+        Ти в мене найкраща ❤️
+    </p>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* ===================================
+   ФОТОГРАФІЇ
+=================================== */
+
+const photos = [
+    "photos/photo1.jpg"
+];  
+
+/* ===================================
+   ЕЛЕМЕНТИ
+=================================== */
+
+const question =
+    document.getElementById("question");
+
+const liar =
+    document.getElementById("liar");
+
+const congrats =
+    document.getElementById("congrats");
+
+
+/* ===================================
+   НІ
+=================================== */
+
+function noAnswer() {
+
+    question.classList.add("hidden");
+
+    liar.classList.remove("hidden");
+
+}
+
+
+/* ===================================
+   НАЗАД
+=================================== */
+
+function backToQuestion() {
+
+    liar.classList.add("hidden");
+
+    question.classList.remove("hidden");
+
+}
+
+
+/* ===================================
+   ТАК
+=================================== */
+
+function yesAnswer() {
+
+    question.classList.add("hidden");
+
+    congrats.classList.remove("hidden");
+
+    startPhotos();
+
+    startHearts();
+
+}
+
+
+/* ===================================
+   ЗМІНА ФОТО
+=================================== */
+
+function startPhotos() {
+
+    const photoElements =
+        document.querySelectorAll(".photo");
+
+    let current = 0;
+
+    function changePhoto() {
+
+        current++;
+
+        if (current >= photos.length) {
+            current = 0;
+        }
+
+        const next =
+            photoElements[current % 3];
+
+        next.style.backgroundImage =
+            `url("${photos[current]}")`;
+
+        photoElements.forEach(
+            photo => photo.classList.remove("active")
+        );
+
+        next.classList.add("active");
+
+    }
+
+    /* Перше фото */
+
+    photoElements[0].style.backgroundImage =
+        `url("${photos[0]}")`;
+
+    /* Наступні */
+
+    setInterval(changePhoto, 4500);
+
+}
+
+
+/* ===================================
+   СЕРДЕЧКА
+=================================== */
+
+function startHearts() {
+
+    setInterval(() => {
+
+        const heart =
+            document.createElement("div");
+
+        heart.className = "heart";
+
+        heart.innerText =
+            Math.random() > 0.5
+            ? "❤️"
+            : "💕";
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+            (18 + Math.random() * 18) + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 5000);
+
+    }, 700);
+
+}
+
+
+</script>
+
+</body>
+</html>
